@@ -1,0 +1,36 @@
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<meta http-equiv='X-UA-Compatible' content='ie=edge' />
+		<title>Static Template</title>
+		<style>
+			body { margin: 0; padding: 0; box-sizing: border-box; display: flex;
+			flex-direction: column; justify-content: center; align-items: center; }
+			.container { display: flex; flex-direction: column; justify-content:
+			center; align-items: center; gap: 10px; border: solid 1px #f7f7f7;
+			border-radius: 10px; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px
+			0px; } .content { display: flex; flex-direction: column; justify-content:
+			center; align-items: center; } .brand { background-color: #205aec;
+			border-top-left-radius: 10px; border-top-right-radius: 10px; padding: 10px
+			25px; color: #f7f7f7; } .otp-string { font-size: 30px; } .quote {
+			text-align: center; }
+		</style>
+	</head>
+	<body>
+		<div class='container'>
+			<div class='brand'>
+				<h1>Wyn's Industry Book</h1>
+			</div>
+			<div class='content'>
+				<h2>Your Otp:</h2>
+				<p class='otp-string'>{{otp}}</p>
+				<p class='quote'>
+					This is OTP use to active your account,
+					<br />
+					it will expired after 30 minutes
+				</p>
+			</div>
+		</div>
+	</body>
+</html>

@@ -37,3 +37,5 @@ lerna-debug.log*
 
 #App
 *.dev
+*.log
+log

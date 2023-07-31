@@ -1,0 +1,10 @@
+@BASE_URL = http://localhost:8080/api/v1/users/
+
+###active
+PATCH {{BASE_URL}}active/904524
+###Otp
+GET {{BASE_URL}}otp/wynrius2@gmail.com
+###Get all user
+GET {{BASE_URL}}
+###Get user by username
+GET {{BASE_URL}}one
