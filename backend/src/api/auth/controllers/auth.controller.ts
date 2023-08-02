@@ -1,8 +1,6 @@
 import { CreateUserDto } from '@api/users/dtos';
 import { UserDto } from '@api/users/dtos/user.dto';
 import { ResponseType } from '@common/types';
-import { USERS_SERVICE } from '@api/users/services';
-import { IUserService } from '@api/users/services/interfaces';
 import {
 	Body,
 	Controller,
@@ -11,22 +9,17 @@ import {
 	Post,
 	Res,
 } from '@nestjs/common';
-import { Response } from 'express';
-import * as argon2 from 'argon2';
 import { plainToClass } from 'class-transformer';
+import { Response } from 'express';
 
-import { MAILER_SERVICE } from '@common/mailer';
-import { IMailerService } from '@common/mailer/interfaces';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
-import { genOtp } from '@common/utils';
+import { AUTH_SERVICE } from '..';
+import { IAuthService } from '../services/interfaces/IAuthService';
+import { SignInDto } from '../dtos';
 
 @Controller('auth')
 export class AuthController {
 	constructor(
-		@Inject(USERS_SERVICE) private readonly userService: IUserService,
-		@Inject(MAILER_SERVICE) private readonly mailerService: IMailerService,
-		@Inject(CACHE_MANAGER) private readonly cache: Cache,
+		@Inject(AUTH_SERVICE) private readonly authService: IAuthService,
 	) {}
 
 	@Post('sign-up')
@@ -34,21 +27,35 @@ export class AuthController {
 		@Body() createUserDto: CreateUserDto,
 		@Res() res: Response<ResponseType<UserDto>>,
 	) {
-		const newUser = await this.userService.create({
-			...createUserDto,
-			hashedPassword: await argon2.hash(createUserDto.password),
-		});
-
-		const otp = genOtp();
-
-		await this.cache.set(otp, newUser.email, 1800 * 1000);
-
-		this.mailerService.sendOtpMail(newUser.email, otp);
+		const newUser = await this.authService.signUp(createUserDto);
 
 		return res.status(HttpStatus.CREATED).json({
 			status: HttpStatus.CREATED,
 			message: 'User signed up successfully',
 			data: plainToClass(UserDto, newUser, { excludeExtraneousValues: true }),
+		});
+	}
+
+	@Post('sign-in')
+	async signIn(
+		@Body() signInDto: SignInDto,
+		@Res()
+		res: Response<
+			ResponseType<{ user: UserDto; accessToken: string; refreshToken: string }>
+		>,
+	) {
+		const userSignInData = await this.authService.signIn(signInDto);
+
+		return res.status(HttpStatus.OK).json({
+			status: HttpStatus.OK,
+			message: 'User signed in successfully',
+			data: {
+				user: plainToClass(UserDto, userSignInData.user, {
+					excludeExtraneousValues: true,
+				}),
+				accessToken: userSignInData.accessToken,
+				refreshToken: userSignInData.refreshToken,
+			},
 		});
 	}
 }

@@ -17,7 +17,8 @@
 		"test:watch": "jest --watch",
 		"test:cov": "jest --coverage",
 		"test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-		"test:e2e": "jest --config ./test/jest-e2e.json"
+		"test:e2e": "jest --config ./test/jest-e2e.json",
+		"reset:app": "rm -rf node_modules yarn.lock && yarn"
 	},
 	"dependencies": {
 		"@nestjs-modules/mailer": "^1.9.1",
@@ -47,6 +48,7 @@
 		"otp-generator": "^4.0.1",
 		"passport": "^0.6.0",
 		"passport-jwt": "^4.0.1",
+		"passport-local": "^1.0.0",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^7.8.1",
 		"winston": "^3.10.0",
@@ -61,6 +63,7 @@
 		"@types/morgan": "^1.9.4",
 		"@types/node": "^20.3.1",
 		"@types/passport-jwt": "^3.0.9",
+		"@types/passport-local": "^1.0.35",
 		"@types/supertest": "^2.0.12",
 		"@typescript-eslint/eslint-plugin": "^5.59.11",
 		"@typescript-eslint/parser": "^5.59.11",

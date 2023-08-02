@@ -32,10 +32,4 @@ export class UserDto extends BaseDto {
 
 	@Expose()
 	avatar?: string;
-
-	@Expose()
-	isActive?: boolean;
-
-	@Expose()
-	refreshToken?: string;
 }

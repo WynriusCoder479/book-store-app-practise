@@ -26,7 +26,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
 		return response.status(exception.getStatus()).json({
 			status: exception.getStatus(),
 			message: exception.name.replace(/([a-z])([A-Z])/g, '$1 $2'),
-			errors: exceptionData['message'],
+			errors: {
+				response: exceptionData['message'],
+				stack: exception.stack,
+			},
 		});
 	}
 }

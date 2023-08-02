@@ -41,7 +41,7 @@ export class UserModel extends BaseModel {
 	@Prop({
 		required: true,
 	})
-	hashedPassword: string;
+	password: string;
 
 	@Prop({ required: true })
 	firstname: string;

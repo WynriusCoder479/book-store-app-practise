@@ -1,17 +1,28 @@
 @BASE_URL = http://localhost:8080/api/v1/auth/
 
-###signup
+###sign up
 POST {{BASE_URL}}sign-up
 Content-Type: application/json
 
 
 {
-	"username": "wynrius2",
-	"email": "wynrius2@gmail.com",
+	"username": "wynrius",
+	"email": "wynrius@gmail.com",
 	"phoneNumber": "0915527901",
 	"password": "Wynrius479!",
 	"firstname": "Khoa",
 	"lastname": "Tran",
 	"gender": "male",
 	"dateOfBirth": "2000-06-30"
+}
+
+
+###sign in
+POST {{BASE_URL}}sign-in
+Content-Type: application/json
+
+
+{
+	"usernameOrEmail": "wynrius@gmail.com",
+	"password": "Wynrius479!"
 }
